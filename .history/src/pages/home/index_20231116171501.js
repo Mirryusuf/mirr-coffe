@@ -1,0 +1,180 @@
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Feather } from "@expo/vector-icons";
+
+export default function Home() {
+  const coffeeTypes = ["Cappuccino", "Espresso", "Latte", "Mocha", "Americano"];
+  const coffeProduct = [
+    {
+      name: "Cappuccino Romeo",
+      price: 25000,
+      description: "with chocolatte",
+      image: require("../../../assets/cappuccino-1.jpg"),
+    },
+    {
+      name: "Espresso Jakarta",
+      price: 23000,
+      description: "with oat milk",
+      image: require("../../../assets/espresso-1.jpg"),
+    },
+    {
+      name: "Latte Caramel",
+      price: 29000,
+      description: "with extra caramel",
+      image: require("../../../assets/latte-1.jpg"),
+    },
+    {
+      name: "Mocha Gajah",
+      price: 27000,
+      description: "with extra milk",
+      image: require("../../../assets/mocha-1.jpg"),
+    },
+    {
+      name: "Americano Timur",
+      price: 25000,
+      description: "with special beans",
+      image: require("../../../assets/americano-1.jpg"),
+    },
+  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const renderHeader = () => {
+    return (
+      <View>
+        <LinearGradient
+          colors={["#131313", "#313131"]}
+          style={{
+            height: 264,
+            paddingHorizontal: 20,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+          }}
+        >
+          <View style={{ flexDirection: "row", marginVertical: 30 }}>
+            <View
+              style={{
+                // backgroundColor: "pink",
+                width: "70%",
+                justifyContent: "center",
+                alignItems: "flex-start",
+              }}
+            >
+              <Text style={{ fontSize: 12, color: "#B7B7B7" }}>Location</Text>
+              <Text style={{ fontSize: 14, color: "white", fontWeight: "600" }}>
+                Jl. Ciragil, Kebayoran Baru
+              </Text>
+            </View>
+            <View
+              style={{
+                // backgroundColor: "cyan",
+                width: "30%",
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
+              <Image
+                source={require("../../../assets/profile-small.jpg")}
+                style={{ width: 44, height: 44, borderRadius: 14 }}
+              />
+            </View>
+          </View>
+
+          <View>
+            <View
+              style={{
+                backgroundColor: "#313131",
+                height: 52,
+                borderRadius: 16,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 15,
+              }}
+            >
+              <Feather
+                name="search"
+                size={20}
+                color="white"
+                style={{ marginRight: 10 }}
+              />
+              <TextInput
+                style={{ flex: 1, height: 42, color: "#989898", fontSize: 14 }}
+                value={"Cari Kopi"}
+                editable={false}
+              />
+            </View>
+          </View>
+        </LinearGradient>
+
+        <View
+          style={{
+            marginTop: -70,
+            zIndex: 99,
+            marginHorizontal: 20,
+            height: 140,
+            marginBottom: 24,
+          }}
+        >
+          <Image
+            source={require("../../../assets/banner-promo.png")}
+            style={{ height: 140, width: "100%", borderRadius: 16 }}
+            resizeMode="cover"
+          />
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ paddingHorizontal: 20 }}
+        >
+          {coffeeTypes.map((type, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                height: 38,
+                paddingHorizontal: 16,
+                borderRadius: 12,
+                backgroundColor: index === activeIndex ? "#C67C4E" : "white",
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: index === coffeeTypes.length - 1 ? 40 : 10,
+              }}
+              onPress={() => setActiveIndex(index)}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: index === activeIndex ? "white" : "#C67C4E",
+                  fontWeight: "600",
+                }}
+              >
+                {type}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  return (
+    <>
+      <StatusBar style="light" backgroundColor="#131313" />
+      <ScrollView style={{ flex: 1, marginTop: 30 }}>
+        <FlatList 
+          ListHeaderComponent={renderHeader}
+        />
+      </ScrollView>
+    </>
+  );
+}
